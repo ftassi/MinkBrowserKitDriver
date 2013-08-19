@@ -52,7 +52,12 @@ class BrowserKitDriver extends CoreDriver
 
     function __clone()
     {
-        $this->client = clone $this->client;
+        $kernel = new \AppKernel('test', true);
+        $kernel->boot();
+
+        $client = $kernel->getContainer()->get('test.client');
+        $client->followRedirects(true);
+        $this->client = $client;
     }
 
 
